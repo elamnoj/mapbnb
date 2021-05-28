@@ -17,18 +17,10 @@ import json
 
 @app.route('/')
 def home():
-    air = pd.read_csv(r'listings.csv')
+    
 
-    # pio.renderers.default = 'browser'
-    fig = px.scatter_mapbox(air, lat="latitude", lon="longitude", hover_name="neighbourhood_cleansed", hover_data=[
-                            "room_type", "price"], color="neighbourhood_cleansed", zoom=11, height=400)
+    return render_template('index.html')
 
-    fig.update_layout(mapbox_style="carto-darkmatter")
-    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-
-    graphJSON = json.dumps(fig.show(), cls=plotly.utils.PlotlyJSONEncoder)
-
-    return render_template('index.html', graphJSON=graphJSON)
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
