@@ -17,7 +17,6 @@ import json
 
 @app.route('/')
 def home():
-    
 
     return render_template('index.html')
 
@@ -66,3 +65,28 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html')
+
+
+@app.route('/chicago')
+def chi():
+    return render_template('cities/chicago.html')
+
+
+@app.route('/austin/')
+def austin():
+    return render_template('cities/austin.html')
+
+
+@app.route('/boston')
+def boston():
+    return render_template('cities/boston.html')
+
+
+@app.route('/dallas')
+def dallas():
+    return render_template('cities/dallas.html')
+
+
+@app.route('/sanfran')
+def sanfran():
+    return render_template('cities/sanfran.html')

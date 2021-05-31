@@ -10,23 +10,26 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for ('static', filename='/css/main.css/') }}">
+    <link rel="stylesheet" href="{{ url_for ('static', filename='./css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body>
-    <!--header begin-->
-    {% include '/includes/header.html' %}
-    <!-- header end-->
-        {% include '/includes/flash_message.html' %}
+    <div class="backer" style="background-image: url('https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-03.jpg')">
+        <!--header begin-->
+        {% include '/includes/header.html' %}
+        <!-- header end-->
+            {% include '/includes/flash_message.html' %}
 
-        {% block content %}
-        {% endblock content %}
-    </main>
-
-    <!--footer begin-->
-    {% include '/includes/footer.html' %}
-    <!--footer end-->
-
+            {% block content %}
+    
+            {% endblock content %}
+    </div>
+        <!--footer begin-->
+        {% include '/includes/footer.html' %}
+        <!--footer end-->
+    
 
 
     <!-- Optional JavaScript -->
