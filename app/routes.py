@@ -6,14 +6,9 @@ import plotly
 from plotly import express as px
 import plotly.io as pio
 
-
-
 import pandas as pd
 import numpy as np
 import json
-
-
-
 
 @app.route('/')
 def home():
@@ -53,6 +48,13 @@ def login():
         flash('Welcome! You are logged in!')
         return redirect(url_for('home'))
     return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash('You have logged out successfully.', 'warning')
+    return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET','POST'])

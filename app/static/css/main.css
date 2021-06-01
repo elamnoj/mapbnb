@@ -8,24 +8,25 @@ header{
     font-family: 'Montserrat', sans-serif !important;
     font-size: 64px;
 }
-.navbar{
-}
 
 body{
     margin-bottom: 75px;
-    background-image: url("/images/ill.png");
     font-family: 'Montserrat', sans-serif !important;
-    font-size: 64px;
+    font-size: 16px;
+}
+
+h1{
+    font-weight:800px;
 }
 
 h1,h2,h3,h4,h5,h6{
     font-family: 'Montserrat', sans-serif !important;
-
 }
 
 footer{
     margin-top: 75px;
 }
+
 
 /* .navbar.transparent.navbar-inverse .navbar-inner {
     border-width: 0px;

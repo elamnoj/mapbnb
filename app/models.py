@@ -58,6 +58,7 @@ class User(UserMixin, db.Model):
                     setattr(self, field, data[field].lower())
                 else:
                     setattr(self, field, data[field])
+                    
     def to_dict(self):
         return {
             '_id': self.id,
