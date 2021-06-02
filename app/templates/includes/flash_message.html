@@ -1,6 +1,6 @@
-{% with messages=get_flashed_messages() %}
+{% with messages=get_flashed_messages(with_categories=true) %}
     {% if messages %}
-        {% for m in messsages %}
+        {% for category, m in messages %}
             <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -9,5 +9,5 @@
                 <strong>{{ m }}</strong>
             </div>
         {% endfor %}
-   {% endif %}
+    {% endif %}
 {% endwith %}

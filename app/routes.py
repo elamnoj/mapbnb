@@ -1,20 +1,49 @@
-from app import app, db
-from flask import render_template, request, redirect, url_for, flash
-from app.models import Post, User, Submit
-from flask_login import login_user, logout_user
-import plotly
-from plotly import express as px
-import plotly.io as pio
-
-import pandas as pd
-import numpy as np
+from app import db
+from flask import render_template, request, redirect, url_for, flash, current_app as app, jsonify
+from app.models import Submit
+from app.blueprints.authentication.models import User
+from flask_login import current_user
 import json
+import stripe
+import os
+
+stripe_keys = {
+    "secret_key": os.environ["STRIPE_SECRET_KEY"],
+    "publishable_key": os.environ["STRIPE_PUBLISHABLE_KEY"],
+    "price_id": os.environ["STRIPE_PRICE_ID"],  # new
+}
+
+
+@app.route("/config")
+def get_publishable_key():
+    stripe_config = {"publicKey": stripe_keys["publishable_key"]}
+    return jsonify(stripe_config)
 
 @app.route('/')
 def home():
-
     return render_template('index.html')
 
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if request.method == 'POST':
+        user = User.query.get(current_user.id)
+        if user is not None:
+            user.first_name = request.form.get('first_name')
+            user.last_name = request.form.get('last_name')
+
+            if request.form.get('password') and request.form.get('confirm_password') and request.form.get('password') == request.form.get('confirm_password'):
+                user.password = request.form.get('password')
+            elif not request.form.get('password') and not request.form.get('confirm_password'):
+                pass
+            else:
+                flash(
+                    'There was an issue updating your information. Please try again.', 'warning')
+                return redirect(url_for('profile'))
+            db.session.commit()
+            flash('User updated successfully', 'success')
+            return redirect(url_for('profile'))
+    return render_template('profile.html')
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -27,68 +56,37 @@ def contact():
         return redirect(url_for('home'))
     return render_template('contact.html')
 
-@app.route('/blog')
-def blog():
-    
-    context = {
-        'posts': [p.to_dict() for p in Post.query.all()]
-    }
-    return render_template('blog.html', **context)
 
-@app.route('/login', methods =['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        user = User.query.filter_by(email=request.form.get('email')).first()
-        if user is None or user.check_password(request.form.get('password')) is False:
-            print('Something is not right')
-            flash('User name and email do not match')
-            return redirect(url_for('login'))
-        remember_me=True if request.form.get('checked') is not None else False
-        login_user(user, remember=remember_me)
-        flash('Welcome! You are logged in!')
-        return redirect(url_for('home'))
-    return render_template('login.html')
+@app.route("/create-checkout-session")
+def create_checkout_session():
+    domain_url = "http://localhost:5000/"
+    stripe.api_key = stripe_keys["secret_key"]
 
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    flash('You have logged out successfully.', 'warning')
-    return redirect(url_for('login'))
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            # client_reference_id=user.id,
+            success_url=domain_url + \
+            "success?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url=domain_url + "cancel",
+            payment_method_types=["card"],
+            mode="subscription",
+            line_items=[
+                {
+                    "price": stripe_keys["price_id"],
+                    "quantity": 1,
+                }
+            ]
+        )
+        return jsonify({"sessionId": checkout_session["id"]})
+    except Exception as e:
+        return jsonify(error=str(e)), 403
 
 
-@app.route('/register', methods=['GET','POST'])
-def register():
-    if request.method == 'POST':
-        u = User()
-        u.from_dict(request.form)
-        u.save()
-        flash('Success!')
-        return redirect(url_for('login'))
-
-    return render_template('register.html')
+@app.route("/success")
+def success():
+    return render_template("register.html")
 
 
-@app.route('/chicago')
-def chi():
-    return render_template('cities/chicago.html')
-
-
-@app.route('/austin/')
-def austin():
-    return render_template('cities/austin.html')
-
-
-@app.route('/boston')
-def boston():
-    return render_template('cities/boston.html')
-
-
-@app.route('/dallas')
-def dallas():
-    return render_template('cities/dallas.html')
-
-
-@app.route('/sanfran')
-def sanfran():
-    return render_template('cities/sanfran.html')
+@app.route("/cancel")
+def cancelled():
+    return render_template("cancel.html")

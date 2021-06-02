@@ -1,6 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-family: 'Montserrat', sans-serif;">
-        <a href="{{ url_for('home') }}"> <img alt="mapbnb" style= "margin-right: 15px; margin-left: 15px;" src="./static/images/Airbnb_Mw.png" width="65" height="45">
+        <a href="{{ url_for('home') }}"> <img alt="mapbnb" style= "margin-right: 15px; margin-left: 15px;" src={{ url_for ('static', filename='/images/Airbnb_Mw.png') }} width="65" height="45">
         <a class="navbar-brand" href="{{ url_for('home') }}" style="font-size: 24px; font-weight: 900;" >mapbnb</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,30 +8,41 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
             <ul class="navbar-nav" >
+                {% if current_user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Cities
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ url_for('austin') }}">Austin</a>
-                        <a class="dropdown-item" href="{{ url_for('boston') }}">Boston</a>
-                        <a class="dropdown-item" href="{{ url_for('chi') }}">Chicago</a>
-                        <a class="dropdown-item" href="{{ url_for('dallas') }}">Dallas</a>
-                        <a class="dropdown-item" href="{{ url_for('sanfran') }}">San Francisco</a>
+                        <a class="dropdown-item" href="{{ url_for('city.austin') }}">Austin</a>
+                        <a class="dropdown-item" href="{{ url_for('city.boston') }}">Boston</a>
+                        <a class="dropdown-item" href="{{ url_for('city.chi') }}">Chicago</a>
+                        <a class="dropdown-item" href="{{ url_for('city.dallas') }}">Dallas</a>
+                        <a class="dropdown-item" href="{{ url_for('city.sanfran') }}">San Francisco</a>
                     </div>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('contact') }}">Help</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
+                {% if not current_user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                    <button type="submit" style="padding-top: 9px;" class="btn btn-dark" id="checkout">Subscribe</button>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
