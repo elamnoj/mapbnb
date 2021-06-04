@@ -2,9 +2,9 @@
 
 {% block content %}
 
-    <div class="container-fluid bg-1 text-center" style="background-image: url('https://www.jeffersonlines.com/wp-content/uploads/Dallas.jpg'); padding-top:170px ; padding-bottom:170px ;background-size: contain;  max-width: 100%;
+    <div class="container-fluid bg-1 text-center" style="background-image: url('https://www.progressiverailroading.com/resources/editorial/2019/PR09190Los-Angeles.jpg'); padding-top:170px ; padding-bottom:170px ; min-width: 100%;
     ">
-        <h1 class="margin" style="color: white; font-size: 96px; font-weight: bolder;">DALLAS</h1>
+        <h1 class="margin" style="color: white; font-size: 96px; font-weight: bolder;">LOS ANGELES</h1>
     </div>
 
 
@@ -30,8 +30,18 @@
 
                 </div>
                 <div class="col-sm-5">
-                    <img src="static/images/chihood.png" class="img-fluid" alt="Responsive image">
-
+                    <img src="{{ url_for ('static', filename='/images/la_map.png') }}" class="img-fluid myImg" alt="Number of listings my neighborhood in LA">
+                    <div id="myModal" class="modal">
+                    
+                        <!-- The Close Button -->
+                        <span class="close">&times;</span>
+                    
+                        <!-- Modal Content (The Image) -->
+                        <img class="modal-content" id="img01">
+                    
+                        <!-- Modal Caption (Image Text) -->
+                        <div id="caption"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,7 +49,18 @@
         <div class="container-fluid bg-grey" style="margin-top: 15px;">
             <div class="row">
                 <div class="col-sm-5">
-                    <img src="static/images/chiex.png" class="img-fluid" alt="Responsive image">
+                    <img src="{{ url_for ('static', filename='/images/la_chart.png') }}" class="img-fluid myImg" alt="Responsive image">
+                    <div id="myModal" class="modal">
+                    
+                        <!-- The Close Button -->
+                        <span class="close">&times;</span>
+                    
+                        <!-- Modal Content (The Image) -->
+                        <img class="modal-content" id="img01">
+                    
+                        <!-- Modal Caption (Image Text) -->
+                        <div id="caption"></div>
+                    </div>
                 </div>
                 <div class="col-sm-7">
                     <h2>Where you'll spend the most</h2>
@@ -57,9 +78,6 @@
         <iframe src="http://127.0.0.1:5000/dallas-map/" width=1100 height=400 frameBorder="0"></iframe>
     </div>
 
-    <div>
-        <button type="button" name="" id="" class="btn btn-primary" btn-block>Add complete package to cart</button>
-    </div>
     
 
 

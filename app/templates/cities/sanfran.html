@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container-fluid bg-1 text-center" style="background-image: 
-url('https://www.sfaf.org/wp-content/uploads/SF-image-900x460-1.jpg'); padding-top:170px ; padding-bottom:170px ;background-size: contain;  max-width:fit;
+url('https://www.sfaf.org/wp-content/uploads/SF-image-900x460-1.jpg'); padding-top:170px ; padding-bottom:170px ;min-width:100%;
 ">
     <h1 class="margin" style="color: white; font-size: 96px; font-weight: bolder;">SAN FRANCISCO</h1>
 </div>
@@ -31,8 +31,18 @@ url('https://www.sfaf.org/wp-content/uploads/SF-image-900x460-1.jpg'); padding-t
 
             </div>
             <div class="col-sm-5">
-                <img src="static/images/chihood.png" class="img-fluid" alt="Responsive image">
-
+                <img src="{{ url_for ('static', filename='/images/sf_map.png') }}" class="img-fluid myImg" alt="Responsive image">
+                <div id="myModal" class="modal">
+                
+                    <!-- The Close Button -->
+                    <span class="close">&times;</span>
+                
+                    <!-- Modal Content (The Image) -->
+                    <img class="modal-content" id="img01">
+                
+                    <!-- Modal Caption (Image Text) -->
+                    <div id="caption"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -40,7 +50,18 @@ url('https://www.sfaf.org/wp-content/uploads/SF-image-900x460-1.jpg'); padding-t
     <div class="container-fluid bg-grey" style="margin-top: 15px;">
         <div class="row">
             <div class="col-sm-5">
-                <img src="static/images/chiex.png" class="img-fluid" alt="Responsive image">
+                <img src="{{ url_for ('static', filename='/images/sf_avg.png') }}" class="img-fluid myImg" alt="Responsive image">
+                <div id="myModal" class="modal">
+                
+                    <!-- The Close Button -->
+                    <span class="close">&times;</span>
+                
+                    <!-- Modal Content (The Image) -->
+                    <img class="modal-content" id="img01">
+                
+                    <!-- Modal Caption (Image Text) -->
+                    <div id="caption"></div>
+                </div>
             </div>
             <div class="col-sm-7">
                 <h2>Where you'll spend the most</h2>

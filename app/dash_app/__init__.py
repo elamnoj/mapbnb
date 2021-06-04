@@ -32,9 +32,9 @@ def create_dash_application(flask_app):
     return dash_app
 
 
-
 # Austin
-aust = pd.read_csv('http://data.insideairbnb.com/united-states/tx/austin/2021-04-16/visualisations/listings.csv')
+aust = pd.read_csv(
+    'http://data.insideairbnb.com/united-states/co/denver/2021-03-29/visualisations/listings.csv')
 
 ausfig = px.scatter_mapbox(aust, lat="latitude", lon="longitude", hover_name="neighbourhood", hover_data=[
     "room_type", "price"], size="price", color="neighbourhood", zoom=11, height=400)
@@ -82,10 +82,10 @@ def create_boston_application(flask_app):
 
 # Dallas
 dal = pd.read_csv(
-    'http://data.insideairbnb.com/united-states/tx/dallas/2021-04-17/visualisations/listings.csv')
+    'http://data.insideairbnb.com/united-states/ca/los-angeles/2021-04-07/visualisations/listings.csv')
 
 dalfig = px.scatter_mapbox(dal, lat="latitude", lon="longitude", hover_name="neighbourhood", hover_data=[
-    "room_type", "price"], size="price", color="neighbourhood", zoom=11, height=400)
+    "room_type", "price"], size="price", color="neighbourhood", zoom=9, height=400)
 
 dalfig.update_layout(mapbox_style="carto-darkmatter")
 dalfig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})

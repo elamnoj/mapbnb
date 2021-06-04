@@ -1,7 +1,7 @@
 from app import db
 from flask import render_template, request, redirect, url_for, flash, current_app as app, jsonify
 from app.models import Submit
-from app.blueprints.authentication.models import User
+from app.blueprints.authentication.models import User, StripeCustomer
 from flask_login import current_user
 import json
 import stripe
@@ -10,7 +10,8 @@ import os
 stripe_keys = {
     "secret_key": os.environ["STRIPE_SECRET_KEY"],
     "publishable_key": os.environ["STRIPE_PUBLISHABLE_KEY"],
-    "price_id": os.environ["STRIPE_PRICE_ID"],  # new
+    "price_id": os.environ["STRIPE_PRICE_ID"],
+    "endpoint_secret": os.environ["STRIPE_ENDPOINT_SECRET"],
 }
 
 
@@ -43,6 +44,17 @@ def profile():
             db.session.commit()
             flash('User updated successfully', 'success')
             return redirect(url_for('profile'))
+    # customer = StripeCustomer.query.filter_by(user_id=current_user.id).first()
+
+    # # if record exists, add the subscription info to the render_template method
+    # if customer:
+    #     subscription = stripe.Subscription.retrieve(
+    #         customer.stripeSubscriptionId)
+    #     product = stripe.Product.retrieve(subscription.plan.product)
+    #     context = {
+    #         "subscription": subscription,
+    #         "product": product,
+    #     }
     return render_template('profile.html')
 
 @app.route('/contact', methods=['GET', 'POST'])
@@ -90,3 +102,41 @@ def success():
 @app.route("/cancel")
 def cancelled():
     return render_template("cancel.html")
+
+
+@app.route("/webhook", methods=["POST"])
+def stripe_webhook():
+    payload = request.get_data(as_text=True)
+    sig_header = request.headers.get("Stripe-Signature")
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, stripe_keys["endpoint_secret"]
+        )
+
+    except ValueError as e:
+        # Invalid payload
+        return "Invalid payload", 400
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return "Invalid signature", 400
+
+    # Handle the checkout.session.completed event
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
+
+        # Fulfill the purchase...
+        handle_checkout_session(session)
+
+    return "Success", 200
+
+
+def handle_checkout_session(session):
+    s=StripeCustomer()
+    s.from_dict(session)
+    db.session.add(s)
+    db.commit
+
+    # here you should fetch the details from the session and save the relevant information
+    # to the database (e.g. associate the user with their subscription)
+    print("Subscription was successful.")

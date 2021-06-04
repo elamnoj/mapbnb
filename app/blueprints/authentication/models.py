@@ -53,6 +53,14 @@ def load_user(id):
 class StripeCustomer(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(
-        db.Integer, db.ForeignKey('users.id'))
+        db.Integer, db.ForeignKey('user.id'))
     stripeCustomerId = db.Column(db.String(255), nullable=False)
     stripeSubscriptionId = db.Column(db.String(255), nullable=False)
+
+    def from_dict(self, data):
+        for field in ['user_id', 'stripeCustomerId', 'stripeSubscriptionId']:
+            if field in data:
+                if field == 'email':
+                    setattr(self, field, data[field].lower())
+                else:
+                    setattr(self, field, data[field])
