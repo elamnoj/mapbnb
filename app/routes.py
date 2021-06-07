@@ -133,7 +133,6 @@ def stripe_webhook():
 
 def handle_checkout_session(session):
     s=StripeCustomer()
-    s.from_dict(session)
     db.session.add(s)
     db.commit
 
