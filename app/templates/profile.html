@@ -4,9 +4,9 @@
 
 <div class="row">
     <div class="col-6 offset-3">
-        <h4>Profile</h4>
+        <h4>Manage Profile</h4>
         <hr />
-        <form action="{{ url_for('profile') }}" method="POST">
+        <form action="{{ url_for('profile') }}" method="POST" style="margin-bottom: 65px; font-size: 16px;">
             <div class="form-group">
                 <input type="text" class="form-control" name="first_name" placeholder="First Name"
                     value="{{ current_user.first_name }}" />
@@ -27,6 +27,10 @@
             </div>
             <input type="submit" class="btn btn-dark btn-block" value="Update Profile" />
         </form>
+
+        <h4>Manage Subscription</h4>
+        <hr />
+        <button type="button" name="" id="" class="btn btn-dark btn-lg btn-block" style="margin-bottom: 55px;">Manage your subscription on the Customer Portal</button>
         <!-- <div class="container mt-5"> -->
             <!-- {% if subscription and subscription.status == "active" %}
             <h4>Your subscription:</h4>
