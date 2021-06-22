@@ -42,7 +42,7 @@ ausfig = px.scatter_mapbox(aust, lat="latitude", lon="longitude", hover_name="ne
 ausfig.update_layout(mapbox_style="carto-darkmatter")
 ausfig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
-def create_austin_application(flask_app):
+def create_denver_application(flask_app):
     dash_app2 = dash.Dash(server=flask_app, url_base_pathname="/austin-map/")
 
     dash_app2.layout = html.Div(children=[
@@ -91,7 +91,7 @@ dalfig.update_layout(mapbox_style="carto-darkmatter")
 dalfig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
 
-def create_dallas_application(flask_app):
+def create_la_application(flask_app):
     dash_app4 = dash.Dash(server=flask_app, url_base_pathname="/dallas-map/")
 
     dash_app4.layout = html.Div(children=[
