@@ -8,9 +8,9 @@ def chi():
     return render_template('cities/chicago.html')
 
 @login_required
-@city.route('/austin/')
+@city.route('/denver/')
 def austin():
-    return render_template('cities/austin.html')
+    return render_template('cities/denver.html')
 
 @login_required
 @city.route('/boston')
@@ -18,9 +18,9 @@ def boston():
     return render_template('cities/boston.html')
 
 @login_required
-@city.route('/dallas')
+@city.route('/la')
 def dallas():
-    return render_template('cities/dallas.html')
+    return render_template('cities/la.html')
 
 @login_required
 @city.route('/sanfran')
