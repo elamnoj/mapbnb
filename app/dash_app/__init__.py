@@ -33,14 +33,14 @@ def create_dash_application(flask_app):
 
 
 # Austin
-aust = pd.read_csv(
+den = pd.read_csv(
     'http://data.insideairbnb.com/united-states/co/denver/2021-03-29/visualisations/listings.csv')
 
-ausfig = px.scatter_mapbox(aust, lat="latitude", lon="longitude", hover_name="neighbourhood", hover_data=[
+denfig = px.scatter_mapbox(den, lat="latitude", lon="longitude", hover_name="neighbourhood", hover_data=[
     "room_type", "price"], size="price", color="neighbourhood", zoom=11, height=400)
 
-ausfig.update_layout(mapbox_style="carto-darkmatter")
-ausfig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+denfig.update_layout(mapbox_style="carto-darkmatter")
+denfig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
 def create_denver_application(flask_app):
     dash_app2 = dash.Dash(server=flask_app, url_base_pathname="/austin-map/")
@@ -49,7 +49,7 @@ def create_denver_application(flask_app):
 
         dcc.Graph(
             id='example-graph',
-            figure=ausfig
+            figure=denfig
         )
     ])
     return dash_app2
@@ -81,14 +81,14 @@ def create_boston_application(flask_app):
 
 
 # Dallas
-dal = pd.read_csv(
+la = pd.read_csv(
     'http://data.insideairbnb.com/united-states/ca/los-angeles/2021-04-07/visualisations/listings.csv')
 
-dalfig = px.scatter_mapbox(dal, lat="latitude", lon="longitude", hover_name="neighbourhood", hover_data=[
+lafig = px.scatter_mapbox(la, lat="latitude", lon="longitude", hover_name="neighbourhood", hover_data=[
     "room_type", "price"], size="price", color="neighbourhood", zoom=9, height=400)
 
-dalfig.update_layout(mapbox_style="carto-darkmatter")
-dalfig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+lafig.update_layout(mapbox_style="carto-darkmatter")
+lafig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
 
 def create_la_application(flask_app):
@@ -98,7 +98,7 @@ def create_la_application(flask_app):
 
         dcc.Graph(
             id='example-graph',
-            figure=dalfig
+            figure=lafig
         )
     ])
     return dash_app4
