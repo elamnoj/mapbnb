@@ -43,7 +43,7 @@ denfig.update_layout(mapbox_style="carto-darkmatter")
 denfig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
 def create_denver_application(flask_app):
-    dash_app2 = dash.Dash(server=flask_app, url_base_pathname="/austin-map/")
+    dash_app2 = dash.Dash(server=flask_app, url_base_pathname="/denver-map/")
 
     dash_app2.layout = html.Div(children=[
 
@@ -80,7 +80,7 @@ def create_boston_application(flask_app):
 
 
 
-# Dallas
+# LA
 la = pd.read_csv(
     'http://data.insideairbnb.com/united-states/ca/los-angeles/2021-04-07/visualisations/listings.csv')
 
@@ -92,7 +92,7 @@ lafig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
 
 def create_la_application(flask_app):
-    dash_app4 = dash.Dash(server=flask_app, url_base_pathname="/dallas-map/")
+    dash_app4 = dash.Dash(server=flask_app, url_base_pathname="/la-map/")
 
     dash_app4.layout = html.Div(children=[
 
