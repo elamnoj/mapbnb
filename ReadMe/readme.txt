@@ -1,0 +1,3 @@
+Mapbnb is an interactive web application built with a Flask framework and as well as HTML/CSS and JavaScript. Utilizing Airbnb data and publicly available geospatial data to provide a better understanding of your stay; developed using Pandas, NumPy, and Dash/plotly. Authentication/authorization and payment data accessed via SQL and Stripe subscription services.
+
+The application is purely for educational purposes.
